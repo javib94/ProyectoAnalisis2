@@ -3,20 +3,20 @@ version : '3'
 services:
   interfaz:
     container_name: frontend_proyecto
-    working_dir: /home/node/app
-    image: node
+    working_dir: /usr/src/app
+    image: node:8
     links:
       - backend
     ports:
-      - "8000:8080"
+      - "8085:8080"
     volumes:
-      - /home/node/app:./frontend
-    command: "npm install && npm run serve"
+      -  ./frontend:/usr/src/app
+    command: bash -c "npm install && npm run serve"
 
   backend:
     container_name: backend_proyecto
-    image: node
-    working_dir: /home/node/app
+    image: node:8
+    working_dir: /usr/src/app
     environment:
       NODE_ENV: development
       DB_NAME: 'banco'
@@ -24,12 +24,12 @@ services:
       DB_PASSWORD: 'node3j5'
       DB_ROOT_PASSWORD: 'root'
     volumes:
-      - /home/node/app:./backend
+      - ./backend:/usr/src/app
     links:
       - database
     ports:
-      - "8000:8081"
-    command: "npm install && node app.js"
+      - "8081:8000"
+    command: bash -c "npm install && node app.js"
 
   database:
     image: mysql:5.7
