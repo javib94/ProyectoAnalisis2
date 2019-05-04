@@ -9,9 +9,9 @@ services:
       - backend
     networks:
         my-net:
-        ipv4_address: 172.16.0.10
-        aliases:
-            - frontend-app
+            ipv4_address: 172.16.0.10
+            aliases:
+                - frontend-app
     ports:
       - "8085:8080"
     volumes:
