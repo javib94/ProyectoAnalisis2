@@ -28,6 +28,7 @@ services:
       DB_USER: 'nodejs'
       DB_PASSWORD: 'node3j5'
       DB_ROOT_PASSWORD: 'root'
+      WAIT_HOSTS: bdProyecto:3306
     volumes:
       - ./backend:/usr/src/app
     links:
@@ -42,6 +43,7 @@ services:
     command: bash -c "npm install && node app.js"
 
   database:
+    container_name: bdProyecto
     image: mysql:5.7
     restart: always
     environment:
