@@ -1,7 +1,7 @@
 const mysql = require('mysql');
 
 var connection = mysql.createConnection({
-    host     : 'db-app', //ESTE ES EL NOMBRE DE CONTENEDOR EN EL AMBIENTE DE DESARROLLO
+    host     : 'basededatos-service', //ESTE ES EL NOMBRE DE CONTENEDOR EN EL AMBIENTE DE DESARROLLO
     user     : process.env.DB_USER,
     password : process.env.DB_PASSWORD,
     database : process.env.DB_NAME
