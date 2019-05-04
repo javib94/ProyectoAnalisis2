@@ -16,6 +16,12 @@ npm run build
 ``` 
 # Api
 -----------------------
+## Dirección del servidor para la Api
+Colocar la dirección actual del API REST
+```
+https://github.com/Caceres-Joseph/AyD2_Proyecto/blob/master/src/components/modules/direccion.js
+```
+
 ## Registro - Post
 ```
  /registro

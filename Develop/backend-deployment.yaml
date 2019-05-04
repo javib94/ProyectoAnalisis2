@@ -1,0 +1,51 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.17.0 (a74acad)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: backend
+  name: backend
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: backend
+    spec:
+      containers:
+      - args:
+        - bash
+        - -c
+        - npm install && node app.js
+        env:
+        - name: DB_NAME
+          value: banco
+        - name: DB_PASSWORD
+          value: node3j5
+        - name: DB_ROOT_PASSWORD
+          value: root
+        - name: DB_USER
+          value: nodejs
+        - name: NODE_ENV
+          value: development
+        image: node:8
+        name: backend-proyecto
+        ports:
+        - containerPort: 8000
+        resources: {}
+        volumeMounts:
+        - mountPath: /usr/src/app
+          name: backend-claim0
+        workingDir: /usr/src/app
+      restartPolicy: Always
+      volumes:
+      - name: backend-claim0
+        persistentVolumeClaim:
+          claimName: backend-claim0
+status: {}

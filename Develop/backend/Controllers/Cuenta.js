@@ -5,7 +5,7 @@ function NuevaCuenta(idCuenta)
 {
     try
     {
-        
+        console.log("llamada al nueva cuenta");
         if(conn)
         {
             var sql = "INSERT INTO Cuenta SET ?";
@@ -36,6 +36,10 @@ function ConsultaSaldo(req, res)
 {
     try
     {
+        console.log("-------------------------------------");
+        console.log("llamada al Consultar Saldo");
+        console.log(req.body);
+        console.log("-------------------------------------");
         var iduser = req.body.idUsuario;
         if(conn)
         {
@@ -84,6 +88,10 @@ function AcreditarSaldo(req, res)
 {
     try
     {
+        console.log("-------------------------------------");
+        console.log("llamada al Acreditar Saldo");
+        console.log(req.body);
+        console.log("-------------------------------------");
         var monto = req.body.monto;
         var user = req.body.idUsuario;
         if(conn)
@@ -147,6 +155,10 @@ function DebitarSaldo(req, res)
 {
     try
     {
+        console.log("-------------------------------------");
+        console.log("llamada al Debitar Saldo");
+        console.log(req.body);
+        console.log("-------------------------------------");
         var monto = req.body.monto;
         var user = req.body.idUsuario;
         if(conn)
@@ -218,11 +230,15 @@ function CuentasNoAsociadas(req, res)
 {
     try
     {
+        console.log("-------------------------------------");
+        console.log("llamada al Cuentas no Asociadas");
+        console.log(req.body);
+        console.log("-------------------------------------");
         var idusuario = req.body.idUsuario;
         if(conn)
         {
-            var sql = "SELECT distinct Cliente.idCliente, Cliente.Correo FROM Cliente WHERE Cliente.idCliente != 10 AND Cliente.idCliente NOT IN (SELECT Distinct Cliente.idCliente as Id FROM Cliente, Asociados WHERE Asociados.idCliente = ? AND Cliente.idCliente = Asociados.idSocio)"
-            var params = [idusuario];
+            var sql = "SELECT distinct Cliente.idCliente, Cliente.Correo as correo FROM Cliente WHERE Cliente.idCliente != ? AND Cliente.Activo != 0 AND Cliente.idCliente NOT IN (SELECT Distinct Cliente.idCliente as Id FROM Cliente, Asociados WHERE Asociados.idCliente = ? AND Cliente.idCliente = Asociados.idSocio)"
+            var params = [idusuario, idusuario];
             conn.query(sql, params, function(error, results, fields){
                 if(error)
                 {
@@ -257,10 +273,14 @@ function CuentasAsociadas(req, res)
 {
     try
     {
+        console.log("-------------------------------------");
+        console.log("llamada al Asociadas");
+        console.log(req.body);
+        console.log("-------------------------------------");
         var idusuario = req.body.idUsuario;
         if(conn)
         {
-            var sql = "SELECT distinct Cliente.idCliente, Cliente.Correo FROM Cliente, Asociados WHERE Asociados.idCliente = ? AND Cliente.idCliente = Asociados.idSocio"
+            var sql = "SELECT distinct Cliente.idCliente, Cliente.Correo as correo FROM Cliente, Asociados WHERE Asociados.idCliente = ? AND Cliente.idCliente = Asociados.idSocio AND Cliente.Activo = 1"
             var params = [idusuario];
             conn.query(sql, params, function(error, results, fields){
                 if(error)

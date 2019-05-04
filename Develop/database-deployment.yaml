@@ -1,0 +1,42 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.17.0 (a74acad)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: database
+  name: database
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: database
+    spec:
+      containers:
+      - env:
+        - name: MYSQL_DATABASE
+          value: banco
+        - name: MYSQL_PASSWORD
+          value: node3j5
+        - name: MYSQL_ROOT_PASSWORD
+          value: root
+        - name: MYSQL_USER
+          value: nodejs
+        image: mysql:5.7
+        name: database
+        resources: {}
+        volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: database-claim0
+      restartPolicy: Always
+      volumes:
+      - name: database-claim0
+        persistentVolumeClaim:
+          claimName: database-claim0
+status: {}
