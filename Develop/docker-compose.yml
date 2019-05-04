@@ -7,6 +7,11 @@ services:
     image: node:8
     links:
       - backend
+    networks:
+        my-net:
+        ipv4_address: 172.16.0.10
+        aliases:
+            - frontend-app
     ports:
       - "8085:8080"
     volumes:
@@ -27,6 +32,11 @@ services:
       - ./backend:/usr/src/app
     links:
       - database
+    networks:
+        my-net:
+            ipv4_address: 172.16.0.20
+            aliases:
+                - backend-app
     ports:
       - "8081:8000"
     command: bash -c "npm install && node app.js"
@@ -41,3 +51,13 @@ services:
       MYSQL_ROOT_PASSWORD: 'root'
     volumes:
       - ./mysql:/var/lib/mysql
+    networks:
+        my-net:
+            ipv4_address: 172.16.0.30
+            aliases:
+                - db-app
+networks:
+    my-net:
+        ipam:
+            config:
+                - subnet: 172.16.0.0/24
